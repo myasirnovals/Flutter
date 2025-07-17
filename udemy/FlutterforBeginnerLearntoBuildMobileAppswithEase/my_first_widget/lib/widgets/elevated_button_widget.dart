@@ -21,7 +21,10 @@ class ElevatedButtonWidget extends StatelessWidget {
                   backgroundColor: Colors.green,
                   textStyle: TextStyle(color: Colors.white, fontSize: 25.0),
                 ),
-              )
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
             ],
           ),
         ),
