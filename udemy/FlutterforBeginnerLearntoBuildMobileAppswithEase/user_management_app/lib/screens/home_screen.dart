@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:user_management_app/models/User.dart';
 import 'package:user_management_app/screens/add_user.dart';
+import 'package:user_management_app/screens/edit_user.dart';
 import 'package:user_management_app/services/userService.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -98,14 +99,25 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {},
               leading: Icon(Icons.person),
               title: Text(_userList[index].name ?? ''),
-              subtitle: Text(_userList[index].name ?? ''),
+              subtitle: Text(_userList[index].contact ?? ''),
               trailing: SizedBox(
                 width: 150.0,
                 child: Row(
                   children: [
                     Expanded(
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditUser(user: _userList[index])))
+                              .then((data) {
+                            if (data != null) {
+                              getAllUsers();
+                              _showSnackBar("User has been updated!");
+                            }
+                          });
+                        },
                         icon: Icon(Icons.edit),
                       ),
                     ),
