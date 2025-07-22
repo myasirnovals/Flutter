@@ -15,6 +15,7 @@ class _AddUserState extends State<AddUser> {
   TextEditingController descriptionController = TextEditingController();
 
   var _userService = UserService();
+  var _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,70 +28,96 @@ class _AddUserState extends State<AddUser> {
         ),
         backgroundColor: Colors.blueAccent,
       ),
-      body: Container(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+      body: Form(
+        key: _formKey,
+        child: Container(
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              TextFormField(
+                controller: nameController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter your name";
+                  }
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  hintText: "Enter Name",
+                  labelText: "Name",
                 ),
-                hintText: "Enter Name",
-                labelText: "Name",
               ),
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            TextField(
-              controller: contactController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                hintText: "Enter Contact",
-                labelText: "Contact",
+              SizedBox(
+                height: 15.0,
               ),
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            TextField(
-              controller: descriptionController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+              TextFormField(
+                controller: contactController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter your contact";
+                  }
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  hintText: "Enter Contact",
+                  labelText: "Contact",
                 ),
-                hintText: "Enter Description",
-                labelText: "Description",
               ),
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      saveData();
-                    });
-                  },
-                  child: Text("Save"),
+              SizedBox(
+                height: 15.0,
+              ),
+              TextFormField(
+                controller: descriptionController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter your description";
+                  }
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  hintText: "Enter Description",
+                  labelText: "Description",
                 ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Reset"),
-                ),
-              ],
-            )
-          ],
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        if (_formKey.currentState!.validate()) {
+                          saveData();
+                        }
+                      });
+                    },
+                    child: Text("Save"),
+                  ),
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        nameController.text = "";
+                        contactController.text = "";
+                        descriptionController.text = "";
+                      });
+                    },
+                    child: Text("Reset"),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
