@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:user_management_app/models/User.dart';
+import 'package:user_management_app/services/userService.dart';
 
 class AddUser extends StatefulWidget {
   const AddUser({super.key});
@@ -8,6 +10,12 @@ class AddUser extends StatefulWidget {
 }
 
 class _AddUserState extends State<AddUser> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController contactController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
+  var _userService = UserService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,10 +28,11 @@ class _AddUserState extends State<AddUser> {
         backgroundColor: Colors.blueAccent,
       ),
       body: Container(
-        padding: EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(10.0),
         child: Column(
           children: [
             TextField(
+              controller: nameController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -36,6 +45,7 @@ class _AddUserState extends State<AddUser> {
               height: 15.0,
             ),
             TextField(
+              controller: contactController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -48,6 +58,7 @@ class _AddUserState extends State<AddUser> {
               height: 15.0,
             ),
             TextField(
+              controller: descriptionController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -62,14 +73,39 @@ class _AddUserState extends State<AddUser> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(onPressed: (){}, child: Text("Save")),
-                SizedBox(width: 10.0,),
-                ElevatedButton(onPressed: (){}, child: Text("Reset")),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      saveData();
+                    });
+                  },
+                  child: Text("Save"),
+                ),
+                SizedBox(
+                  width: 10.0,
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text("Reset"),
+                ),
               ],
             )
           ],
         ),
       ),
     );
+  }
+
+  Future saveData() async {
+    var _user = User();
+
+    _user.name = nameController.text;
+    _user.contact = contactController.text;
+    _user.description = descriptionController.text;
+
+    var result = await _userService.saveUser(_user);
+    Navigator.pop(context, result);
+
+    print("User added!");
   }
 }
