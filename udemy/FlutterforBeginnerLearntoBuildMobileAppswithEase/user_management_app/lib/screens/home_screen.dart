@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:user_management_app/models/User.dart';
 import 'package:user_management_app/screens/add_user.dart';
 import 'package:user_management_app/screens/edit_user.dart';
+import 'package:user_management_app/screens/view_user.dart';
 import 'package:user_management_app/services/userService.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -96,7 +97,10 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ViewUser(user: _userList[index])));
+              },
               leading: Icon(Icons.person),
               title: Text(_userList[index].name ?? ''),
               subtitle: Text(_userList[index].contact ?? ''),
