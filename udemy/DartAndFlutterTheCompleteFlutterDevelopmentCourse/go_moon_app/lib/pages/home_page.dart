@@ -7,9 +7,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _deviceHeight = MediaQuery.of(context).size.height;
+    _deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: Container(
+          height: _deviceHeight,
+          width: _deviceWidth,
           child: _pageTitle(),
         ),
       ),
@@ -18,7 +22,7 @@ class HomePage extends StatelessWidget {
 
   Widget _pageTitle() {
     return const Text(
-      "#GoMoon",
+      "#GoToMoon",
       style: TextStyle(
         color: Colors.white,
         fontSize: 70,
