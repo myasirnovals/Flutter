@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_moon_app/widgets/custom_dropdown_button.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -14,7 +15,24 @@ class HomePage extends StatelessWidget {
         child: Container(
           height: _deviceHeight,
           width: _deviceWidth,
-          child: _pageTitle(),
+          padding: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.05),
+          child: Stack(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _pageTitle(),
+                  _bookRideWidget(),
+                ],
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: _moonImageWidget(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -31,12 +49,81 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _astroImageWidget() {
+  Widget _moonImageWidget() {
     return Container(
+      height: _deviceHeight * 0.50,
+      width: _deviceWidth,
       decoration: const BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.fill,
-          image: AssetImage("assets/images/astro_moon.png"),
+          image: AssetImage("assets/images/moon.png"),
+        ),
+      ),
+    );
+  }
+
+  Widget _bookRideWidget() {
+    return SizedBox(
+      height: _deviceHeight * 0.25,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _destinationDropDownWidget(),
+          _travellersInformationWidget(),
+          _rideButton(),
+        ],
+      ),
+    );
+  }
+
+  Widget _destinationDropDownWidget() {
+    List<String> items = [
+      'James Webb Station',
+      'Prenup Station',
+      'Henderson Station',
+    ];
+    return CustomDropdownButton(values: items, width: _deviceWidth);
+  }
+
+  Widget _travellersInformationWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CustomDropdownButton(values: const [
+          '1',
+          '2',
+          '3',
+          '4',
+        ], width: _deviceWidth * 0.45),
+        CustomDropdownButton(values: const [
+          'Economy',
+          'Business',
+          'First Class',
+          'Private',
+        ], width: _deviceWidth * 0.40),
+      ],
+    );
+  }
+
+  Widget _rideButton() {
+    return Container(
+      margin: EdgeInsets.only(bottom: _deviceHeight * 0.01),
+      width: _deviceWidth,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: MaterialButton(
+        onPressed: () {},
+        child: const Text(
+          "Book Ride!",
+          style: TextStyle(
+            color: Colors.black,
+          ),
         ),
       ),
     );
