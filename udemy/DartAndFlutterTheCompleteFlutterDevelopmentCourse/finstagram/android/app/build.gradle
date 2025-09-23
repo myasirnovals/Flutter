@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.finstagram"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
